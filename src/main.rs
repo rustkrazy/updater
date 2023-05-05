@@ -156,6 +156,9 @@ fn update_instance(args: Args) -> anyhow::Result<()> {
     upload(&clt, base.join("/update/root")?, root_buf)?;
     thread::sleep(Duration::from_secs(1));
 
+    println!("Switching to inactive root partition...");
+    post(&clt, base.join("/switch")?)?;
+
     println!("Rebooting...");
     reboot(clt, base);
 
@@ -168,6 +171,20 @@ fn upload(clt: &Client, dst: Url, buf: Vec<u8>) -> anyhow::Result<()> {
         .header(CONTENT_TYPE, "application/octet-stream")
         .body(buf)
         .send()?;
+
+    match resp.error_for_status_ref() {
+        Ok(_) => {}
+        Err(e) => {
+            println!("Rustkrazy instance returned an error: {}", resp.text()?);
+            return Err(e.into());
+        }
+    }
+
+    Ok(())
+}
+
+fn post(clt: &Client, dst: Url) -> anyhow::Result<()> {
+    let resp = clt.post(dst).send()?;
 
     match resp.error_for_status_ref() {
         Ok(_) => {}
