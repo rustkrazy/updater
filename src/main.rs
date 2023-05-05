@@ -146,12 +146,15 @@ fn update_instance(args: Args) -> anyhow::Result<()> {
 
     println!("Uploading boot partition...");
     upload(&clt, base.join("/update/boot")?, boot_buf)?;
+    thread::sleep(Duration::from_secs(1));
 
     println!("Uploading MBR...");
     upload(&clt, base.join("/update/mbr")?, mbr_buf)?;
+    thread::sleep(Duration::from_secs(1));
 
     println!("Uploading root partition...");
     upload(&clt, base.join("/update/root")?, root_buf)?;
+    thread::sleep(Duration::from_secs(1));
 
     println!("Rebooting...");
     reboot(clt, base);
