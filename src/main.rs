@@ -134,6 +134,10 @@ fn update_instance(args: Args) -> anyhow::Result<()> {
     write_mbr(&mut mbr, &mut boot, &buf["vmlinuz"], &buf["cmdline.txt"])?;
     write_root(&mut root, &args.arch, &args.crates, &args.git, &args.init)?;
 
+    mbr.rewind()?;
+    boot.rewind()?;
+    root.rewind()?;
+
     mbr.read_to_end(&mut mbr_buf)?;
     boot.read_to_end(&mut boot_buf)?;
     root.read_to_end(&mut root_buf)?;
