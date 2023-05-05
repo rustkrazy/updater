@@ -107,14 +107,8 @@ fn write_mbr_partition_table(
 
 fn update_instance(args: Args) -> anyhow::Result<()> {
     let mut mbr_buf = Vec::new();
-    mbr_buf.resize(512, 0);
-
     let mut boot_buf = Vec::new();
-    boot_buf.resize((256 * MiB).try_into()?, 0);
-
-    // We only need to populate one of the two root partitions.
     let mut root_buf = Vec::new();
-    root_buf.resize((256 * MiB).try_into()?, 0);
 
     let mut mbr_file = NamedTempFile::new()?;
     let mut boot_file = NamedTempFile::new()?;
