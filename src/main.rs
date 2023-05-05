@@ -166,11 +166,19 @@ fn update_instance(args: Args) -> anyhow::Result<()> {
 }
 
 fn upload(clt: &Client, dst: Url, buf: Vec<u8>) -> anyhow::Result<()> {
-    clt.put(dst)
+    let resp = clt
+        .put(dst)
         .header(CONTENT_TYPE, "application/octet-stream")
         .body(buf)
-        .send()?
-        .error_for_status()?;
+        .send()?;
+
+    match resp.error_for_status_ref() {
+        Ok(_) => {}
+        Err(e) => {
+            println!("Rustkrazy instance returned an error: {}", resp.text()?);
+            return Err(e.into());
+        }
+    }
 
     Ok(())
 }
