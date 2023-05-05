@@ -140,6 +140,8 @@ fn update_instance(args: Args) -> anyhow::Result<()> {
 
     let clt = Client::builder()
         .danger_accept_invalid_certs(true)
+        .pool_idle_timeout(None)
+        .timeout(None)
         .build()?;
 
     let base = Url::parse(&args.update)?;
