@@ -158,6 +158,7 @@ fn update_instance(args: Args) -> anyhow::Result<()> {
 
     println!("Switching to inactive root partition...");
     post(&clt, base.join("/switch")?)?;
+    thread::sleep(Duration::from_secs(1));
 
     println!("Rebooting...");
     reboot(clt, base);
