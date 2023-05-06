@@ -1722,6 +1722,8 @@ dependencies = [
  "fatfs",
  "fscommon",
  "reqwest",
+ "serde",
+ "serde_json",
  "squashfs-ng",
  "tempfile",
 ]
