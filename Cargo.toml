@@ -14,5 +14,5 @@ fscommon = "0.1.1"
 reqwest = { version = "0.11.17", features = ["blocking"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-squashfs-ng = { version = "0.1.2", git = "https://github.com/HimbeerserverDE/squashfs-ng-rs.git" }
+squashfs-ng = { version = "0.1.2", git = "https://github.com/rustkrazy/squashfs-ng-rs.git" }
 tempfile = "3.5.0"
