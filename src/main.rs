@@ -407,7 +407,7 @@ fn write_root(
         cargo::ops::install(
             &cargo_opts,
             Some(tmp_dir.path().to_str().unwrap()), // root (output dir)
-            vec![(crate_name, None)],
+            vec![(crate_name.to_string(), None)],
             SourceId::crates_io(&CargoConfig::default()?)?,
             false, // from_cwd
             &compile_opts,
@@ -434,7 +434,7 @@ fn write_root(
         cargo::ops::install(
             &cargo_opts,
             Some(tmp_dir.path().to_str().unwrap()), // root (output dir)
-            vec![(pkg, None)],
+            vec![(pkg.to_string(), None)],
             SourceId::from_url(&("git+".to_owned() + url.as_str()))?,
             false, // from_cwd
             &compile_opts,

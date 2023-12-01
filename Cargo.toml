@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0"
-cargo = "0.67.0"
+cargo = "0.75.1"
 clap = { version = "4.2.7", features = ["derive"] }
 fatfs = "0.3.6"
 fscommon = "0.1.1"
