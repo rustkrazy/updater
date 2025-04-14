@@ -157,6 +157,9 @@ fn update_instance(args: Args) -> anyhow::Result<()> {
 
     let base = Url::parse(&args.update)?;
 
+    println!("Setting firstboot flag...");
+    mark_updated(&clt, &base)?;
+
     println!("Uploading boot partition...");
     upload(&clt, base.join("/update/boot")?, boot_buf)?;
     thread::sleep(Duration::from_secs(1));
@@ -175,6 +178,25 @@ fn update_instance(args: Args) -> anyhow::Result<()> {
 
     println!("Rebooting...");
     reboot(clt, base);
+
+    Ok(())
+}
+
+fn mark_updated(clt: &Client, base: &Url) -> anyhow::Result<()> {
+    let resp = clt
+        .post(base.join("/data/write")?)
+        .query(&[("path", "/data/update")])
+        .header(CONTENT_TYPE, "application/octet-stream")
+        .body(Vec::new())
+        .send()?;
+
+    match resp.error_for_status_ref() {
+        Ok(_) => {}
+        Err(e) => {
+            println!("Unable to set update flag: {}", resp.text()?);
+            return Err(e.into());
+        }
+    }
 
     Ok(())
 }
