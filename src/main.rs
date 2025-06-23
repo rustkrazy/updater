@@ -663,7 +663,7 @@ fn write_root(
 fn main() -> anyhow::Result<()> {
     let args = Args::parse();
 
-    let init_in_crates = args.crates.iter().any(|pkg| *pkg == args.init);
+    let init_in_crates = args.crates.contains(&args.init);
     let init_in_git = args.git.iter().any(|location| {
         let mut split = location.split('%');
 
