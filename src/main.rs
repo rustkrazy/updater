@@ -10,7 +10,7 @@ use anyhow::bail;
 use cargo::core::compiler::{BuildConfig, CompileMode};
 use cargo::core::SourceId;
 use cargo::ops::{CompileFilter, CompileOptions};
-use cargo::util::config::Config as CargoConfig;
+use cargo::util::context::GlobalContext as CargoConfig;
 use cargo::util::interning::InternedString;
 use clap::Parser;
 use fatfs::{FatType, FormatVolumeOptions};
@@ -435,6 +435,8 @@ fn write_root(
             &compile_opts,
             false, // force
             true,  // no_track
+            false, // dry_run
+            None,  // lockfile_path
         )?;
     }
 
@@ -462,6 +464,8 @@ fn write_root(
             &compile_opts,
             false, // force
             true,  // no_track
+            false, // dry_run
+            None,  // lockfile_path
         )?;
     }
 
